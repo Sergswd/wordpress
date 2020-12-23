@@ -74,15 +74,21 @@
                 <div class="row">
                     <div class="col-md-10 offset-md-1 col-lg-5 offset-lg-1">
                         <div class="about__img">
-                            <img src="<?php echo bloginfo('template_url');?>/assets/img/about.jpg" alt="про компанию">
+                          <?php
+                            $image = get_field('about_img');
+
+                            if (!empty($image)): ?>
+                                <img 
+                                src="<?php echo $image['url']; ?>" 
+                                alt="<?php echo $image['alt']; ?>">
+                            <?php endif;
+                          ?>
                         </div>
                     </div>
                     <div class="col-md-10 offset-md-1 offset-lg-0 col-lg-6 col-xl-5 offset-xl-1">
-                        <h1 class="title underlined">Про компанию</h1>
+                        <h1 class="title underlined"><?php the_field('about_title'); ?></h1>
                         <div class="about__text">
-                            Наша компания уже больше десяти лет дарит позитивные эмоции детям и их родителям. Мы воплощаем все детские мечты и помогаем родителям дарить счастливое детство!
-                            <br> <br>
-                            Но и взрослые иногда так нуждаются в детских эмоциях! Мы можем и это, ведь так приятно почувствовать заботу даже когда тебе за... :)
+                          <?php the_field('about_descr'); ?>
                         </div>
                         <a href="#" class="button">Узнать больше</a>
                     </div>
@@ -104,7 +110,7 @@
             <div class="container">
                 <h2 class="subtitle">Мягкие игрушки</h2>
                 <div class="toys__wrapper">
-                  <div class="toys__item" style="background-image: url(<?php echo bloginfo('template_url'); ?>/assets/img/toy_1.jpg)">
+                  <div class="toys__item" style="background-image: url(<?php echo bloginfo('template_url');?>/assets/img/toy_1.jpg)">
                     <div class="toys__item-info">
                       <div class="toys__item-title">Плюшевые медведи</div>
                       <div class="toys__item-descr">
@@ -504,6 +510,15 @@
             </div>
         </div>
 
+<?php
+  function print_hello($text, $name) {
+    echo 'Hello world' . '<br>' . $text . ' '  . $name;
+  };
+
+  add_action('my_hook', 'print_hello', 10, 2);
+
+  do_action('my_hook', 'Еб', 'иваныч');
+?>
 <?php
   get_footer();
 ?>        
